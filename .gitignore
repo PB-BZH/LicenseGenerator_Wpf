@@ -1,0 +1,50 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.rsuser
+
+# Build
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+publish/
+Publish/
+artifacts/
+Artifacts/
+
+# .NET
+*.nupkg
+*.snupkg
+project.assets.json
+project.nuget.cache
+
+# Logs / temporaires
+*.log
+*.tmp
+*.bak
+*.cache
+
+# Fichiers sensibles licences / clés
+private_key.pem
+public_key.pem
+*.pem
+*.pfx
+*.p12
+*.key
+*.lic
+license.lic
+password.json
+
+# Profils locaux éventuels
+Profiles/
+profiles/
+*.profile.json
+license-profile.json
+
+# Windows
+Thumbs.db
+Desktop.ini

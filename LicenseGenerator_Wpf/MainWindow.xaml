@@ -2,18 +2,20 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="PB BZH License Generator - WPF"
-        Height="803"
-        Width="980"
+        Height="820"
+        Width="1100"
+        MinHeight="720"
+        MinWidth="980"
         WindowStartupLocation="CenterScreen">
-
+    
     <Grid Margin="23,20,20,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto" MinHeight="84"/>
-            <RowDefinition Height="375.837"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        
         <!-- Titre -->
         <StackPanel Grid.Row="0"
                     Margin="0,0,0,20">
@@ -187,6 +189,7 @@
                      FontSize="13"
                      AcceptsReturn="True"
                      AcceptsTab="True"
+                     IsReadOnly="True"
                      TextWrapping="NoWrap"
                      VerticalScrollBarVisibility="Auto"
                      HorizontalScrollBarVisibility="Auto"/>

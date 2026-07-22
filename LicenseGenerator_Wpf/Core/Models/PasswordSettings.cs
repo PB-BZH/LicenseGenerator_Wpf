@@ -1,4 +1,4 @@
-namespace LicenseGenerator.Core.Models;
+namespace LicenseGenerator_Wpf.Core.Models;
 
 public sealed class PasswordSettings {
   public string SaltBase64 { get; set; } = string.Empty;

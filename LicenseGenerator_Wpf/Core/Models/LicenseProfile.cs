@@ -1,4 +1,4 @@
-namespace LicenseGenerator.Core.Models;
+namespace LicenseGenerator_Wpf.Core.Models;
 
 public sealed class LicenseProfile {
   public Guid Id { get; set; } = Guid.NewGuid();

@@ -1,9 +1,10 @@
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using LicenseGenerator.Core.Models;
+using LicenseGenerator_Wpf.Core.Models;
 
-namespace LicenseGenerator.Core.Services;
+namespace LicenseGenerator_Wpf.Core.Services;
 
 public sealed class LicenseFileService {
   private static readonly JsonSerializerOptions SigningJsonOptions = new() {

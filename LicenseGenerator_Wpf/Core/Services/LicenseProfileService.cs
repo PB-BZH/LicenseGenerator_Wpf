@@ -1,7 +1,8 @@
+using System.IO;
 using System.Text.Json;
-using LicenseGenerator.Core.Models;
+using LicenseGenerator_Wpf.Core.Models;
 
-namespace LicenseGenerator.Core.Services;
+namespace LicenseGenerator_Wpf.Core.Services;
 
 public sealed class LicenseProfileService {
   private static readonly JsonSerializerOptions JsonOptions = new() {

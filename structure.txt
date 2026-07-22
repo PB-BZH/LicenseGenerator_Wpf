@@ -1,0 +1,75 @@
+Structure du dossier pour le volume Données
+Le numéro de série du volume est 00000093 6572:B572
+G:.
+|   .gitignore
+|   LicenseGenerator_Wpf.slnx
+|   structure.txt
+|   
+\---LicenseGenerator_Wpf
+    |   App.xaml
+    |   App.xaml.cs
+    |   AssemblyInfo.cs
+    |   LicenseGenerator_Wpf.csproj
+    |   LicenseGenerator_Wpf.csproj.user
+    |   MainWindow.xaml
+    |   MainWindow.xaml.cs
+    |   
+    +---bin
+    |   \---Debug
+    |       \---net10.0-windows
+    +---Core
+    |   +---Models
+    |   |       ApplicationLicense.cs
+    |   |       LicenseGenerationResult.cs
+    |   |       LicenseProfile.cs
+    |   |       PasswordSettings.cs
+    |   |       
+    |   +---Profiles
+    |   |       ServiceManagerProfile.cs
+    |   |       
+    |   \---Services
+    |           ApplicationAccessService.cs
+    |           ApplicationPaths.cs
+    |           LicenseFileService.cs
+    |           LicenseMailService.cs
+    |           LicenseProfileService.cs
+    |           PasswordService.cs
+    |           
+    \---obj
+        |   LicenseGenerator_Wpf.csproj.nuget.dgspec.json
+        |   LicenseGenerator_Wpf.csproj.nuget.g.props
+        |   LicenseGenerator_Wpf.csproj.nuget.g.targets
+        |   LicenseGenerator_Wpf_yzhe20lx_wpftmp.csproj.nuget.dgspec.json
+        |   LicenseGenerator_Wpf_yzhe20lx_wpftmp.csproj.nuget.g.props
+        |   LicenseGenerator_Wpf_yzhe20lx_wpftmp.csproj.nuget.g.targets
+        |   project.assets.json
+        |   project.nuget.cache
+        |   
+        \---Debug
+            \---net10.0-windows
+                |   .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
+                |   App.g.cs
+                |   App.g.i.cs
+                |   LicenseGenerator_Wpf.AssemblyInfo.cs
+                |   LicenseGenerator_Wpf.AssemblyInfoInputs.cache
+                |   LicenseGenerator_Wpf.assets.cache
+                |   LicenseGenerator_Wpf.csproj.AssemblyReference.cache
+                |   LicenseGenerator_Wpf.csproj.FileListAbsolute.txt
+                |   LicenseGenerator_Wpf.designer.deps.json
+                |   LicenseGenerator_Wpf.designer.runtimeconfig.json
+                |   LicenseGenerator_Wpf.GeneratedMSBuildEditorConfig.editorconfig
+                |   LicenseGenerator_Wpf.GlobalUsings.g.cs
+                |   LicenseGenerator_Wpf_MarkupCompile.cache
+                |   LicenseGenerator_Wpf_MarkupCompile.i.cache
+                |   LicenseGenerator_Wpf_MarkupCompile.lref
+                |   LicenseGenerator_Wpf_yzhe20lx_wpftmp.AssemblyInfo.cs
+                |   LicenseGenerator_Wpf_yzhe20lx_wpftmp.AssemblyInfoInputs.cache
+                |   LicenseGenerator_Wpf_yzhe20lx_wpftmp.assets.cache
+                |   LicenseGenerator_Wpf_yzhe20lx_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+                |   LicenseGenerator_Wpf_yzhe20lx_wpftmp.GlobalUsings.g.cs
+                |   LicenseGenerator_Wpf_yzhe20lx_wpftmp.sourcelink.json
+                |   MainWindow.g.cs
+                |   MainWindow.g.i.cs
+                |   
+                +---ref
+                \---refint

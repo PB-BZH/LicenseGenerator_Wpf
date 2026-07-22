@@ -1,4 +1,4 @@
-namespace LicenseGenerator.Core.Models;
+namespace LicenseGenerator_Wpf.Core.Models;
 
 public sealed class LicenseGenerationResult {
   public required string FilePath { get; init; }

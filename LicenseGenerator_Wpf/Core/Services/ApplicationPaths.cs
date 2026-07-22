@@ -1,4 +1,6 @@
-namespace LicenseGenerator.Core.Services;
+using System.IO;
+
+namespace LicenseGenerator_Wpf.Core.Services;
 
 public static class ApplicationPaths {
   public static string ProfilesDirectory {

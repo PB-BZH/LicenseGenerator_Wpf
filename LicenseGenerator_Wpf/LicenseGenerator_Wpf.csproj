@@ -8,4 +8,17 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Core\Services\ApplicationAccessService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PB.BZH.Help.Library">
+      <HintPath>..\..\PB.BZH.Help.Library\PB.BZH.Help.Library\bin\Release\net10.0-windows\PB.BZH.Help.Library.dll</HintPath>
+    </Reference>
+    <Reference Include="PB.BZH.Licensing">
+      <HintPath>..\..\PB.BZH.Licensing\PB.BZH.Licensing\bin\Release\net10.0-windows\PB.BZH.Licensing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

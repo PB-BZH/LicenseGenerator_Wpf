@@ -1,7 +1,7 @@
-﻿using LicenseGenerator.Core.Models;
-using LicenseGenerator.UI.Forms;
+using LicenseGenerator_Wpf.Core.Models;
+using LicenseGenerator_Wpf.UI.Forms;
 
-namespace LicenseGenerator.Core.Services;
+namespace LicenseGenerator_Wpf.Core.Services;
 
 public sealed class ApplicationAccessService {
   private readonly PasswordService _passwordService = new();

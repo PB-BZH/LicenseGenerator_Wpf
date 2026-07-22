@@ -1,4 +1,4 @@
-namespace LicenseGenerator.Core.Models;
+namespace LicenseGenerator_Wpf.Core.Models;
 
 public sealed class ApplicationLicense {
   public string Product { get; set; } = string.Empty;

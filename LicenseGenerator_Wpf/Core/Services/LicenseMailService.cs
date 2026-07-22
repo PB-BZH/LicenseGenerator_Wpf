@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Windows.Interop;
 using Microsoft.Win32;
 
 namespace LicenseGenerator.Core.Services;

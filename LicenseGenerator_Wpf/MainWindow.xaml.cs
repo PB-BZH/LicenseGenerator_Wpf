@@ -383,4 +383,68 @@ public partial class MainWindow: Window {
         MessageBoxImage.Error);
     }
   }
+
+  private void BtnLoadProfile_Click(
+    object sender,
+    RoutedEventArgs e) {
+
+    try {
+      OpenFileDialog dialog = new() {
+        Title = "Charger un profil de licence",
+        InitialDirectory = ApplicationPaths.ProfilesDirectory,
+        Filter = "Profil de licence (*.json)|*.json|Tous les fichiers (*.*)|*.*",
+        CheckFileExists = true,
+        Multiselect = false
+      };
+
+      bool? result =
+        dialog.ShowDialog(this);
+
+      if (result != true) {
+        return;
+      }
+
+      LicenseProfile? profile =
+        _profileService.LoadProfileFromFile(
+          dialog.FileName);
+
+      if (profile is null) {
+        MessageBox.Show(
+          this,
+          "Le fichier sélectionné ne contient pas un profil valide.",
+          "Chargement impossible",
+          MessageBoxButton.OK,
+          MessageBoxImage.Warning);
+
+        return;
+      }
+
+      _currentProfileFilePath =
+        dialog.FileName;
+
+      ApplyProfileToUI(profile);
+
+      _lastGeneratedLicenseFilePath =
+        profile.LastLicenseFilePath ?? string.Empty;
+
+      btnOpenLicenseFolder.IsEnabled =
+        !string.IsNullOrWhiteSpace(_lastGeneratedLicenseFilePath)
+        && File.Exists(_lastGeneratedLicenseFilePath);
+
+      MessageBox.Show(
+        this,
+        "Le profil a été chargé avec succès.",
+        "Profil chargé",
+        MessageBoxButton.OK,
+        MessageBoxImage.Information);
+    }
+    catch (Exception exception) {
+      MessageBox.Show(
+        this,
+        exception.Message,
+        "Chargement impossible",
+        MessageBoxButton.OK,
+        MessageBoxImage.Error);
+    }
+  }
 }

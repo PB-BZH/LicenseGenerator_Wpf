@@ -2,16 +2,16 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="PB BZH License Generator - WPF"
-        Height="720"
+        Height="803"
         Width="980"
         WindowStartupLocation="CenterScreen">
 
-    <Grid Margin="20">
+    <Grid Margin="23,20,20,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="220"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto" MinHeight="84"/>
+            <RowDefinition Height="375.837"/>
         </Grid.RowDefinitions>
 
         <!-- Titre -->
@@ -28,7 +28,7 @@
         </StackPanel>
 
         <!-- Formulaire -->
-        <Grid Grid.Row="1">
+        <Grid Margin="0,77,0,0" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="180"/>
                 <ColumnDefinition Width="*"/>
@@ -156,24 +156,22 @@
         <StackPanel Grid.Row="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
-                    Margin="0,20,0,10">
-
+                    Margin="0,20,0,10" Width="260">
             <Button x:Name="btnNew"
                     Content="Nouveau"
                     Width="120"
                     Height="36"
-                    Margin="0,0,10,0"
                     Click="BtnNew_Click"/>
 
             <Button x:Name="btnGenerate"
                     Content="Générer"
                     Width="140"
                     Height="36"
-                    Click="BtnGenerate_Click"/>
+                    Click="BtnGenerate_Click" RenderTransformOrigin="0.463,-0.781"/>
         </StackPanel>
 
         <!-- Résultat -->
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="3" Margin="0,1,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>

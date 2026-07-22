@@ -167,6 +167,20 @@
                     Margin="0,0,10,0"
                     Click="BtnNew_Click"/>
 
+            <Button x:Name="btnSaveProfile"
+                    Content="Enregistrer profil"
+                    Width="150"
+                    Height="36"
+                    Margin="0,0,10,0"
+                    Click="BtnSaveProfile_Click"/>
+
+            <Button x:Name="btnImportPrivateKey"
+                    Content="Importer clé privée"
+                    Width="160"
+                    Height="36"
+                    Margin="0,0,10,0"
+                    Click="BtnImportPrivateKey_Click"/>
+
             <Button x:Name="btnOpenLicenseFolder"
                     Content="Ouvrir dossier"
                     Width="140"
@@ -175,14 +189,6 @@
                     IsEnabled="False"
                     Click="BtnOpenLicenseFolder_Click"/>
             
-            <Button x:Name="btnImportPrivateKey"
-                    Content="Importer clé privée"
-                    Width="160"
-                    Height="36"
-                    Margin="0,0,10,0"
-                    Click="BtnImportPrivateKey_Click"/>
-
-
             <Button x:Name="btnGenerate"
                     Content="Générer"
                     Width="140"

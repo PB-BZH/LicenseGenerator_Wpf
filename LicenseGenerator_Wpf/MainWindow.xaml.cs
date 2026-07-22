@@ -9,8 +9,11 @@ namespace LicenseGenerator_Wpf;
 
 public partial class MainWindow: Window {
   private readonly LicenseFileService _licenseFileService = new();
-  private string _lastGeneratedLicenseFilePath = string.Empty;
+  private readonly LicenseProfileService _profileService = new();
 
+  private string? _currentProfileFilePath;
+
+  private string _lastGeneratedLicenseFilePath = string.Empty;
   private LicenseProfile _currentProfile = new();
 
   public MainWindow() {
@@ -175,6 +178,8 @@ public partial class MainWindow: Window {
 
     ApplyProfileToUI(
       CreateEmptyProfile());
+
+    _currentProfileFilePath = null;
 
     _lastGeneratedLicenseFilePath = string.Empty;
     btnOpenLicenseFolder.IsEnabled = false;
@@ -346,5 +351,36 @@ public partial class MainWindow: Window {
     RoutedEventArgs e) {
 
     dtpMaintenanceUntil.IsEnabled = true;
+  }
+
+  private void BtnSaveProfile_Click(
+  object sender,
+  RoutedEventArgs e) {
+
+    try {
+      LicenseProfile profile =
+        ApplyUIToProfile();
+
+      _currentProfileFilePath =
+        _profileService.SaveProfile(
+          profile,
+          _currentProfileFilePath);
+
+      MessageBox.Show(
+        this,
+        "Le profil a été enregistré avec succès.\n\n" +
+        _currentProfileFilePath,
+        "Profil enregistré",
+        MessageBoxButton.OK,
+        MessageBoxImage.Information);
+    }
+    catch (Exception exception) {
+      MessageBox.Show(
+        this,
+        exception.Message,
+        "Enregistrement impossible",
+        MessageBoxButton.OK,
+        MessageBoxImage.Error);
+    }
   }
 }

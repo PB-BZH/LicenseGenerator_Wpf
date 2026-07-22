@@ -79,6 +79,10 @@ public sealed class LicenseFileService {
     };
   }
 
+  public static string GetExpectedPrivateKeyPath() {
+    return GetPrivateKeyPath();
+  }
+
   private static void Validate(LicenseProfile profile) {
     if (string.IsNullOrWhiteSpace(profile.ProductId)) {
       throw new InvalidOperationException(
@@ -194,5 +198,63 @@ public sealed class LicenseFileService {
     return Path.Combine(
       GetKeyDirectory(),
       "private_key.pem");
+  }
+
+  public void ImportPrivateKey(
+    string sourceFilePath,
+    bool overwriteExistingKey = true) {
+
+    if (string.IsNullOrWhiteSpace(sourceFilePath)) {
+      throw new InvalidOperationException(
+        "Aucun fichier de clé privée n'a été sélectionné.");
+    }
+
+    if (!File.Exists(sourceFilePath)) {
+      throw new InvalidOperationException(
+        "Le fichier de clé privée sélectionné est introuvable.");
+    }
+
+    string targetFilePath =
+      GetPrivateKeyPath();
+
+    string sourceFullPath =
+      Path.GetFullPath(sourceFilePath);
+
+    string targetFullPath =
+      Path.GetFullPath(targetFilePath);
+
+    string pem =
+      File.ReadAllText(sourceFullPath);
+
+    try {
+      using RSA rsa = RSA.Create();
+      rsa.ImportFromPem(pem);
+    }
+    catch (Exception exception) {
+      throw new InvalidOperationException(
+        "Le fichier sélectionné ne semble pas être une clé privée RSA valide.",
+        exception);
+    }
+
+    if (string.Equals(
+          sourceFullPath,
+          targetFullPath,
+          StringComparison.OrdinalIgnoreCase)) {
+
+      // La clé sélectionnée est déjà au bon emplacement.
+      // On ne recopie donc pas le fichier sur lui-même.
+      return;
+    }
+
+    if (File.Exists(targetFullPath)
+        && !overwriteExistingKey) {
+      throw new InvalidOperationException(
+        "Une clé privée existe déjà.");
+    }
+
+    File.WriteAllText(
+      targetFullPath,
+      pem,
+      new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
   }
 }

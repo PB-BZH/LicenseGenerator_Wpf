@@ -7,7 +7,7 @@
         MinHeight="720"
         MinWidth="980"
         WindowStartupLocation="CenterScreen">
-    
+
     <Grid Margin="23,20,20,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <!-- Titre -->
         <StackPanel Grid.Row="0"
                     Margin="0,0,0,20">
@@ -158,20 +158,38 @@
         <StackPanel Grid.Row="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
-                    Margin="0,20,0,10" Width="260">
+                    Margin="0,20,0,10">
+
             <Button x:Name="btnNew"
                     Content="Nouveau"
                     Width="120"
                     Height="36"
+                    Margin="0,0,10,0"
                     Click="BtnNew_Click"/>
+
+            <Button x:Name="btnOpenLicenseFolder"
+                    Content="Ouvrir dossier"
+                    Width="140"
+                    Height="36"
+                    Margin="0,0,10,0"
+                    IsEnabled="False"
+                    Click="BtnOpenLicenseFolder_Click"/>
+            
+            <Button x:Name="btnImportPrivateKey"
+                    Content="Importer clé privée"
+                    Width="160"
+                    Height="36"
+                    Margin="0,0,10,0"
+                    Click="BtnImportPrivateKey_Click"/>
+
 
             <Button x:Name="btnGenerate"
                     Content="Générer"
                     Width="140"
                     Height="36"
-                    Click="BtnGenerate_Click" RenderTransformOrigin="0.463,-0.781"/>
-        </StackPanel>
+                    Click="BtnGenerate_Click"/>
 
+        </StackPanel>
         <!-- Résultat -->
         <Grid Grid.Row="3" Margin="0,1,0,0">
             <Grid.RowDefinitions>

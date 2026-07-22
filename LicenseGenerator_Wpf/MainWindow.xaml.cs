@@ -1,12 +1,15 @@
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using LicenseGenerator_Wpf.Core.Models;
 using LicenseGenerator_Wpf.Core.Services;
+using Microsoft.Win32;
 
 namespace LicenseGenerator_Wpf;
 
 public partial class MainWindow: Window {
   private readonly LicenseFileService _licenseFileService = new();
+  private string _lastGeneratedLicenseFilePath = string.Empty;
 
   private LicenseProfile _currentProfile = new();
 
@@ -172,6 +175,102 @@ public partial class MainWindow: Window {
 
     ApplyProfileToUI(
       CreateEmptyProfile());
+
+    _lastGeneratedLicenseFilePath = string.Empty;
+    btnOpenLicenseFolder.IsEnabled = false;
+  }
+
+  private void BtnOpenLicenseFolder_Click(
+  object sender,
+  RoutedEventArgs e) {
+
+    try {
+      if (string.IsNullOrWhiteSpace(_lastGeneratedLicenseFilePath)
+          || !File.Exists(_lastGeneratedLicenseFilePath)) {
+
+        MessageBox.Show(
+          this,
+          "Aucun fichier de licence généré n'est disponible.",
+          "Ouvrir dossier",
+          MessageBoxButton.OK,
+          MessageBoxImage.Information);
+
+        return;
+      }
+
+      Process.Start(new ProcessStartInfo {
+        FileName = "explorer.exe",
+        Arguments = $"/select,\"{_lastGeneratedLicenseFilePath}\"",
+        UseShellExecute = true
+      });
+    }
+    catch (Exception exception) {
+      MessageBox.Show(
+        this,
+        exception.Message,
+        "Ouverture impossible",
+        MessageBoxButton.OK,
+        MessageBoxImage.Error);
+    }
+  }
+
+  private void BtnImportPrivateKey_Click(
+  object sender,
+  RoutedEventArgs e) {
+
+    try {
+      OpenFileDialog dialog = new() {
+        Title = "Sélectionner la clé privée",
+        Filter = "Clé privée PEM (*.pem)|*.pem|Tous les fichiers (*.*)|*.*",
+        CheckFileExists = true,
+        Multiselect = false
+      };
+
+      bool? result =
+        dialog.ShowDialog(this);
+
+      if (result != true) {
+        return;
+      }
+
+      string expectedPath =
+        LicenseFileService.GetExpectedPrivateKeyPath();
+
+      if (File.Exists(expectedPath)) {
+        MessageBoxResult confirmation =
+          MessageBox.Show(
+            this,
+            "Une clé privée existe déjà.\n\n" +
+            "Voulez-vous la remplacer ?",
+            "Importer clé privée",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Warning);
+
+        if (confirmation != MessageBoxResult.Yes) {
+          return;
+        }
+      }
+
+      _licenseFileService.ImportPrivateKey(
+        dialog.FileName,
+        overwriteExistingKey: true);
+
+      MessageBox.Show(
+        this,
+        "La clé privée a été importée avec succès.\n\n" +
+        expectedPath,
+        "Clé privée importée",
+        MessageBoxButton.OK,
+        MessageBoxImage.Information);
+    }
+    catch (Exception exception) {
+      MessageBox.Show(
+        this,
+        exception.Message,
+        "Import impossible",
+        MessageBoxButton.OK,
+        MessageBoxImage.Error);
+    }
   }
 
   private void BtnGenerate_Click(
@@ -187,6 +286,12 @@ public partial class MainWindow: Window {
 
       profile.LastLicenseFilePath =
         result.FilePath;
+
+      _lastGeneratedLicenseFilePath =
+        result.FilePath;
+
+      btnOpenLicenseFolder.IsEnabled =
+        File.Exists(_lastGeneratedLicenseFilePath);
 
       profile.LastGeneratedAt =
         result.GeneratedAt;

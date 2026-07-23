@@ -1,5 +1,11 @@
+using System.Reflection;
+
 namespace LicenseGenerator_Wpf.Core.Models;
 
+[Obfuscation(
+  Feature = "renaming",
+  Exclude = true,
+  ApplyToMembers = true)]
 public sealed class ApplicationLicense {
   public string Product { get; set; } = string.Empty;
 

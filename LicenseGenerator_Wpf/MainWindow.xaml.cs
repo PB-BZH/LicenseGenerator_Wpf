@@ -10,7 +10,6 @@ namespace LicenseGenerator_Wpf;
 public partial class MainWindow: Window {
   private readonly LicenseFileService _licenseFileService = new();
   private readonly LicenseProfileService _profileService = new();
-
   private string? _currentProfileFilePath;
 
   private string _lastGeneratedLicenseFilePath = string.Empty;
@@ -18,9 +17,8 @@ public partial class MainWindow: Window {
 
   public MainWindow() {
     InitializeComponent();
-
-    ApplyProfileToUI(
-      CreateDefaultProfile());
+    //WpfThemeManager.ApplyDarkTheme(this);
+    ApplyProfileToUI(CreateDefaultProfile());
   }
 
   private static LicenseProfile CreateDefaultProfile() {

@@ -40,8 +40,6 @@ license.lic
 password.json
 
 # Profils locaux éventuels
-Profiles/
-profiles/
 *.profile.json
 license-profile.json
 

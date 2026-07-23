@@ -2,8 +2,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using LicenseGenerator_Wpf.Core.Models;
+using LicenseGenerator_Wpf.Core.Profiles;
 using LicenseGenerator_Wpf.Core.Services;
 using Microsoft.Win32;
+using PB.BZH.Licensing.Core.Services;
 
 namespace LicenseGenerator_Wpf;
 
@@ -14,11 +16,15 @@ public partial class MainWindow: Window {
 
   private string _lastGeneratedLicenseFilePath = string.Empty;
   private LicenseProfile _currentProfile = new();
+  private readonly LicenseService _licenseService;
+  private ServiceManagerProfile _profile = new();
+
 
   public MainWindow() {
     InitializeComponent();
+    _licenseService = LicenseHelper.CreerLicenseService(_profile);
     //WpfThemeManager.ApplyDarkTheme(this);
-    ApplyProfileToUI(CreateDefaultProfile());
+    ApplyProfileToUI(CreateEmptyProfile());
   }
 
   private static LicenseProfile CreateDefaultProfile() {
@@ -48,90 +54,38 @@ public partial class MainWindow: Window {
   }
 
   private LicenseProfile ApplyUIToProfile() {
-    LicenseProfile profile =
-      _currentProfile;
-
-    profile.ProductId =
-      txtProductId.Text?.Trim() ?? string.Empty;
-
-    profile.LicenseId =
-      txtLicenseId.Text?.Trim() ?? string.Empty;
-
-    profile.CustomerName =
-      txtCustomerName.Text?.Trim() ?? string.Empty;
-
-    profile.SiteName =
-      txtSite.Text?.Trim() ?? string.Empty;
-
-    profile.EmailContact =
-      txtEmailContact.Text?.Trim() ?? string.Empty;
-
-    profile.MachineHash =
-      txtMachineHash.Text?.Trim() ?? string.Empty;
-
-    profile.ValidUntil =
-      chkValidUnlimited.IsChecked == true
-        ? null
-        : ToDateOnly(dtpValidUntil.SelectedDate);
-
-    profile.MaintenanceUntil =
-      chkMaintenanceUnlimited.IsChecked == true
-        ? null
-        : ToDateOnly(dtpMaintenanceUntil.SelectedDate);
-
-    profile.ProductName =
-      ConstruireNomProfil(profile);
-
+    LicenseProfile profile = _currentProfile;
+    profile.ProductId = txtProductId.Text?.Trim() ?? string.Empty;
+    profile.LicenseId = txtLicenseId.Text?.Trim() ?? string.Empty;
+    profile.CustomerName = txtCustomerName.Text?.Trim() ?? string.Empty;
+    profile.SiteName = txtSite.Text?.Trim() ?? string.Empty;
+    profile.EmailContact = txtEmailContact.Text?.Trim() ?? string.Empty;
+    profile.MachineHash = txtMachineHash.Text?.Trim() ?? string.Empty;
+    profile.ValidUntil = chkValidUnlimited.IsChecked == true
+      ? null
+      : ToDateOnly(dtpValidUntil.SelectedDate);
+    profile.MaintenanceUntil = chkMaintenanceUnlimited.IsChecked == true
+      ? null
+      : ToDateOnly(dtpMaintenanceUntil.SelectedDate);
+    profile.ProductName = ConstruireNomProfil(profile);
     return profile;
   }
 
-  private void ApplyProfileToUI(
-    LicenseProfile profile) {
-
+  private void ApplyProfileToUI(LicenseProfile profile) {
     _currentProfile = profile;
-
-    txtProductId.Text =
-      profile.ProductId;
-
-    txtLicenseId.Text =
-      profile.LicenseId;
-
-    txtCustomerName.Text =
-      profile.CustomerName;
-
-    txtSite.Text =
-      profile.SiteName;
-
-    txtEmailContact.Text =
-      profile.EmailContact;
-
-    txtMachineHash.Text =
-      profile.MachineHash;
-
-    chkValidUnlimited.IsChecked =
-      profile.ValidUntil is null;
-
-    dtpValidUntil.SelectedDate =
-      (profile.ValidUntil
-       ?? DateOnly.FromDateTime(DateTime.Today).AddYears(1))
-      .ToDateTime(TimeOnly.MinValue);
-
-    dtpValidUntil.IsEnabled =
-      profile.ValidUntil is not null;
-
-    chkMaintenanceUnlimited.IsChecked =
-      profile.MaintenanceUntil is null;
-
-    dtpMaintenanceUntil.SelectedDate =
-      (profile.MaintenanceUntil
-       ?? DateOnly.FromDateTime(DateTime.Today).AddYears(1))
-      .ToDateTime(TimeOnly.MinValue);
-
-    dtpMaintenanceUntil.IsEnabled =
-      profile.MaintenanceUntil is not null;
-
-    txtResult.Text =
-      string.Empty;
+    txtProductId.Text = profile.ProductId;
+    txtLicenseId.Text = profile.LicenseId;
+    txtCustomerName.Text = profile.CustomerName;
+    txtSite.Text = profile.SiteName;
+    txtEmailContact.Text = profile.EmailContact;
+    txtMachineHash.Text = profile.MachineHash;
+    chkValidUnlimited.IsChecked = profile.ValidUntil is null;
+    dtpValidUntil.SelectedDate = (profile.ValidUntil ?? DateOnly.FromDateTime(DateTime.Today).AddYears(1)).ToDateTime(TimeOnly.MinValue);
+    dtpValidUntil.IsEnabled = profile.ValidUntil is not null;
+    chkMaintenanceUnlimited.IsChecked = profile.MaintenanceUntil is null;
+    dtpMaintenanceUntil.SelectedDate = (profile.MaintenanceUntil ?? DateOnly.FromDateTime(DateTime.Today).AddYears(1)).ToDateTime(TimeOnly.MinValue);
+    dtpMaintenanceUntil.IsEnabled = profile.MaintenanceUntil is not null;
+    txtResult.Text = string.Empty;
   }
 
   private static DateOnly? ToDateOnly(
@@ -180,7 +134,7 @@ public partial class MainWindow: Window {
     _currentProfileFilePath = null;
 
     _lastGeneratedLicenseFilePath = string.Empty;
-    btnOpenLicenseFolder.IsEnabled = false;
+    SetOpenLicenseFolderEnabled(false);
   }
 
   private void BtnOpenLicenseFolder_Click(
@@ -293,8 +247,8 @@ public partial class MainWindow: Window {
       _lastGeneratedLicenseFilePath =
         result.FilePath;
 
-      btnOpenLicenseFolder.IsEnabled =
-        File.Exists(_lastGeneratedLicenseFilePath);
+      SetOpenLicenseFolderEnabled(
+        File.Exists(_lastGeneratedLicenseFilePath));
 
       profile.LastGeneratedAt =
         result.GeneratedAt;
@@ -349,6 +303,12 @@ public partial class MainWindow: Window {
     RoutedEventArgs e) {
 
     dtpMaintenanceUntil.IsEnabled = true;
+  }
+
+  private void BtnMenuQuitter_Click(
+    object sender,
+    RoutedEventArgs e) {
+    Close();
   }
 
   private void BtnSaveProfile_Click(
@@ -425,9 +385,9 @@ public partial class MainWindow: Window {
       _lastGeneratedLicenseFilePath =
         profile.LastLicenseFilePath ?? string.Empty;
 
-      btnOpenLicenseFolder.IsEnabled =
+      SetOpenLicenseFolderEnabled(
         !string.IsNullOrWhiteSpace(_lastGeneratedLicenseFilePath)
-        && File.Exists(_lastGeneratedLicenseFilePath);
+        && File.Exists(_lastGeneratedLicenseFilePath));
 
       MessageBox.Show(
         this,
@@ -443,6 +403,81 @@ public partial class MainWindow: Window {
         "Chargement impossible",
         MessageBoxButton.OK,
         MessageBoxImage.Error);
+    }
+  }
+
+  private void BtnDeleteProfile_Click(
+    object sender,
+    RoutedEventArgs e) {
+
+    try {
+      if (string.IsNullOrWhiteSpace(_currentProfileFilePath)
+          || !File.Exists(_currentProfileFilePath)) {
+
+        MessageBox.Show(
+          this,
+          "Aucun profil enregistré ou chargé n'est actuellement sélectionné.",
+          "Supprimer profil",
+          MessageBoxButton.OK,
+          MessageBoxImage.Information);
+
+        return;
+      }
+
+      string profileName =
+        _currentProfile.DisplayName;
+
+      MessageBoxResult confirmation =
+        MessageBox.Show(
+          this,
+          "Voulez-vous vraiment supprimer ce profil ?\n\n" +
+          profileName,
+          "Confirmer la suppression",
+          MessageBoxButton.YesNo,
+          MessageBoxImage.Warning);
+
+      if (confirmation != MessageBoxResult.Yes) {
+        return;
+      }
+
+      _profileService.DeleteProfileFile(
+        _currentProfileFilePath);
+
+      _currentProfileFilePath = null;
+      _lastGeneratedLicenseFilePath = string.Empty;
+
+      SetOpenLicenseFolderEnabled(false);
+
+      ApplyProfileToUI(
+        CreateEmptyProfile());
+
+      txtResult.Text = string.Empty;
+
+      MessageBox.Show(
+        this,
+        "Le profil a été supprimé.",
+        "Profil supprimé",
+        MessageBoxButton.OK,
+        MessageBoxImage.Information);
+    }
+    catch (Exception exception) {
+      MessageBox.Show(
+        this,
+        exception.Message,
+        "Suppression impossible",
+        MessageBoxButton.OK,
+        MessageBoxImage.Error);
+    }
+  }
+
+  private void SetOpenLicenseFolderEnabled(bool isEnabled) {
+
+    if (btnOpenLicenseFolder is not null) {
+      btnOpenLicenseFolder.IsEnabled = isEnabled;
+    }
+
+    if (mnuOpenLicenseFolder is not null) {
+      mnuOpenLicenseFolder.IsEnabled = isEnabled;
     }
   }
 }

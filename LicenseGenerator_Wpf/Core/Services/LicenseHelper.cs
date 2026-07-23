@@ -60,11 +60,11 @@ public static class LicenseHelper {
     return licenseResult.IsValid;
   }
 
-  //public static LicenseOptions ConstruireDisplayOptions(ServiceManagerProfile profile) {
-  //  return new LicenseOptions {
-  //    LogoImage = profile.Product.LogoImage
-  //  };
-  //}
+  public static LicenseOptions ConstruireDisplayOptions(ServiceManagerProfile profile) {
+    return new LicenseOptions {
+      LogoImage = profile.Product.LogoImage
+    };
+  }
 
   //public static void AfficherLicence(IWin32Window owner,LicenseService licenseService,ServiceManagerProfile profile) {
 

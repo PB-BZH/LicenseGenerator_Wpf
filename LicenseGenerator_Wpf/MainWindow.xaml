@@ -13,22 +13,40 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        <Menu Grid.Row="0"
+              Margin="0,0,0,18">
+            <MenuItem Header="Fichier">
+                <MenuItem Header="Nouveau" Click="BtnNew_Click"/>
+                <MenuItem Header="Enregistrer profil" Click="BtnSaveProfile_Click"/>
+                <MenuItem Header="Charger profil" Click="BtnLoadProfile_Click"/>
+                <MenuItem Header="Supprimer profil" Click="BtnDeleteProfile_Click"/>
+                <Separator/>
+                <MenuItem Header="Importer clé privée" Click="BtnImportPrivateKey_Click"/>
+                <MenuItem x:Name="mnuOpenLicenseFolder"
+                          Header="Ouvrir dossier licences"
+                          IsEnabled="False"
+                          Click="BtnOpenLicenseFolder_Click"/>
+                <Separator/>
+                <MenuItem Header="Quitter" Click="BtnMenuQuitter_Click"/>
+            </MenuItem>
+        </Menu>
         <!-- Titre -->
-        <StackPanel Grid.Row="0"
-                    Margin="0,0,0,20">
+        <StackPanel Grid.Row="1"
+            Margin="0,0,0,20">
             <TextBlock Text="PB BZH License Generator"
-                       FontSize="26"
-                       FontWeight="Bold"/>
+               FontSize="26"
+               FontWeight="Bold"/>
 
             <TextBlock Text="Version WPF - Génération de licences signées"
-                       FontSize="14"
-                       Foreground="Gray"
-                       Margin="0,4,0,0"/>
-        </StackPanel>
+               FontSize="14"
+               Foreground="Gray"
+               Margin="0,4,0,0"/>
 
+        </StackPanel>
+        
         <!-- Formulaire -->
         <Grid Margin="0,77,0,0" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
@@ -155,56 +173,77 @@
         </Grid>
 
         <!-- Boutons -->
-        <StackPanel Grid.Row="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Margin="0,20,0,10">
+        <Grid Grid.Row="3"
+      Margin="0,20,0,10">
 
-            <Button x:Name="btnNew"
-                    Content="Nouveau"
-                    Width="120"
-                    Height="36"
-                    Margin="0,0,10,0"
-                    Click="BtnNew_Click"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <Button x:Name="btnSaveProfile"
-                    Content="Enregistrer profil"
-                    Width="150"
-                    Height="36"
-                    Margin="0,0,10,0"
-                    Click="BtnSaveProfile_Click"/>
+            <StackPanel Grid.Row="0"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
 
-            <Button x:Name="btnLoadProfile"
-                    Content="Charger profil"
-                    Width="140"
-                    Height="36"
-                    Margin="0,0,10,0"
-                    Click="BtnLoadProfile_Click"/>
-            
-            <Button x:Name="btnImportPrivateKey"
-                    Content="Importer clé privée"
-                    Width="160"
-                    Height="36"
-                    Margin="0,0,10,0"
-                    Click="BtnImportPrivateKey_Click"/>
+                <Button x:Name="btnNew"
+                Content="Nouveau"
+                Width="120"
+                Height="36"
+                Margin="0,0,10,0"
+                Click="BtnNew_Click"/>
 
-            <Button x:Name="btnOpenLicenseFolder"
-                    Content="Ouvrir dossier"
-                    Width="140"
-                    Height="36"
-                    Margin="0,0,10,0"
-                    IsEnabled="False"
-                    Click="BtnOpenLicenseFolder_Click"/>
-            
-            <Button x:Name="btnGenerate"
-                    Content="Générer"
-                    Width="140"
-                    Height="36"
-                    Click="BtnGenerate_Click"/>
+                <Button x:Name="btnSaveProfile"
+                Content="Enregistrer profil"
+                Width="150"
+                Height="36"
+                Margin="0,0,10,0"
+                Click="BtnSaveProfile_Click"/>
 
-        </StackPanel>
+                <Button x:Name="btnLoadProfile"
+                Content="Charger profil"
+                Width="140"
+                Height="36"
+                Margin="0,0,10,0"
+                Click="BtnLoadProfile_Click"/>
+
+                <Button x:Name="btnDeleteProfile"
+                Content="Supprimer profil"
+                Width="150"
+                Height="36"
+                Tag="Danger"
+                Click="BtnDeleteProfile_Click"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Margin="0,10,0,0">
+
+                <Button x:Name="btnImportPrivateKey"
+                Content="Importer clé privée"
+                Width="160"
+                Height="36"
+                Margin="0,0,10,0"
+                Click="BtnImportPrivateKey_Click"/>
+
+                <Button x:Name="btnOpenLicenseFolder"
+                Content="Ouvrir dossier"
+                Width="140"
+                Height="36"
+                Margin="0,0,10,0"
+                IsEnabled="False"
+                Click="BtnOpenLicenseFolder_Click"/>
+
+                <Button x:Name="btnGenerate"
+                Content="Générer"
+                Width="140"
+                Height="36"
+                Click="BtnGenerate_Click"/>
+            </StackPanel>
+        </Grid>
+        
         <!-- Résultat -->
-        <Grid Grid.Row="3" Margin="0,1,0,0">
+        <Grid Grid.Row="4" Margin="0,1,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>

@@ -1,24 +1,54 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<ApplicationIcon>Ressources\Application.ico</ApplicationIcon>
+		<PackageIcon>Application.png</PackageIcon>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Core\Services\ApplicationAccessService.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Core\Services\ApplicationAccessService.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="PB.BZH.Help.Library">
-      <HintPath>..\..\PB.BZH.Help.Library\PB.BZH.Help.Library\bin\Release\net10.0-windows\PB.BZH.Help.Library.dll</HintPath>
-    </Reference>
-    <Reference Include="PB.BZH.Licensing">
-      <HintPath>..\..\PB.BZH.Licensing\PB.BZH.Licensing\bin\Release\net10.0-windows\PB.BZH.Licensing.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="Ressources\Application.ico" />
+	</ItemGroup>
 
+	<ItemGroup>
+		<Reference Include="PB.BZH.Help.Library">
+			<HintPath>..\..\PB.BZH.Help.Library\PB.BZH.Help.Library\bin\Release\net10.0-windows\PB.BZH.Help.Library.dll</HintPath>
+		</Reference>
+		<Reference Include="PB.BZH.Licensing">
+			<HintPath>..\..\PB.BZH.Licensing\PB.BZH.Licensing\bin\Release\net10.0-windows\PB.BZH.Licensing.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Ressources\Application.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+	<PropertyGroup Condition="'$(TechnicalLicenseRequired)' == 'true'">
+		<DefineConstants>$(DefineConstants);TECHNICAL_LICENSE_REQUIRED</DefineConstants>
+	</PropertyGroup>
 </Project>

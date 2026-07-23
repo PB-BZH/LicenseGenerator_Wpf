@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace LicenseGenerator_Wpf.Core.Profiles {
   public sealed class ServiceManagerProfile {
     public ProductOptions Product { get; set; } = new();
@@ -26,7 +28,7 @@ namespace LicenseGenerator_Wpf.Core.Profiles {
     public string Description { get; set; } = "Generate license keys for PB BZH Concept products";
     public string UpgradeCode { get; set; } = "";
     public string IconPath { get; set; } = "";
-    //public Image? LogoImage { get; set; } = Properties.Resources.Application;
+    public Image? LogoImage { get; set; } = Properties.Resources.Application;
     public string DownloadPageUrl { get; set; } = "https://www.pb-bzh-concept.fr";
     public string PrivacyPageUrl { get; set; } = "https://www.pb-bzh-concept.fr/privacy.php";
     public string Copyright { get; set; } = "© Copyright PB BZH Concept 2026";

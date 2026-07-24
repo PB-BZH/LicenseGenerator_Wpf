@@ -57,6 +57,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Reference Include="PB.BZH.Licensing.Core">
+	    <HintPath>..\..\PB.BZH.Licensing.Core\PB.BZH.Licensing.Core\bin\Release\net10.0-windows\PB.BZH.Licensing.Core.dll</HintPath>
+	  </Reference>
 	  <Reference Include="PB.BZH.Licensing.Wpf">
 	    <HintPath>..\..\PB.BZH.Licensing.Wpf\PB.BZH.Licensing.Wpf\bin\Release\net10.0-windows\PB.BZH.Licensing.Wpf.dll</HintPath>
 	  </Reference>

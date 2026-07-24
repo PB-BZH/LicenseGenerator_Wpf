@@ -1,8 +1,8 @@
 using System.Windows;
 using LicenseGenerator_Wpf.Core.Profiles;
-using PB.BZH.Licensing.Wpf;
-using PB.BZH.Licensing.Wpf.Core.Models;
-using PB.BZH.Licensing.Wpf.Core.Services;
+using PB.BZH.Licensing.Core.Models;
+using PB.BZH.Licensing.Core.Services;
+using PB.BZH.Licensing.Wpf.UI.Windows;
 
 namespace LicenseGenerator_Wpf.Core.Services;
 
@@ -70,7 +70,7 @@ public static class LicenseHelper {
       return true;
     }
 
-    LicenseActivationView activationView = new(
+    LicenseActivationWindow activationView = new(
       licenseService,
       messageErreur: licenseResult.Message,
       activationObligatoire: true);
@@ -115,46 +115,46 @@ public static class LicenseHelper {
       licenseService.ValidateInstalledLicense();
 
     if (!resultat.IsValid || resultat.License is null) {
-      LicenseActivationView activationView = new(
+      LicenseActivationWindow activationWindow = new(
         licenseService,
         resultat.Message,
         activationObligatoire: false);
 
-      activationView.Owner = owner;
-      activationView.WindowStartupLocation =
+      activationWindow.Owner = owner;
+      activationWindow.WindowStartupLocation =
         WindowStartupLocation.CenterOwner;
 
-      activationView.ShowDialog();
+      activationWindow.ShowDialog();
       return;
     }
 
     LicenseOptions displayOptions =
       ConstruireDisplayOptions(profile);
 
-    LicenseInfoView infoView = new(
+    LicenseInfoWindow infoWindow = new(
       resultat.License,
       displayOptions);
 
-    infoView.Owner = owner;
-    infoView.WindowStartupLocation =
+    infoWindow.Owner = owner;
+    infoWindow.WindowStartupLocation =
       WindowStartupLocation.CenterOwner;
 
-    infoView.ShowDialog();
+    infoWindow.ShowDialog();
   }
 
   public static void ImporterLicence(
     Window owner,
     LicenseService licenseService) {
 
-    LicenseActivationView activationView = new(
+    LicenseActivationWindow activationWindow = new(
       licenseService,
       messageErreur: "Importer une nouvelle licence.",
       activationObligatoire: false);
 
-    activationView.Owner = owner;
-    activationView.WindowStartupLocation =
+    activationWindow.Owner = owner;
+    activationWindow.WindowStartupLocation =
       WindowStartupLocation.CenterOwner;
 
-    activationView.ShowDialog();
+    activationWindow.ShowDialog();
   }
 }

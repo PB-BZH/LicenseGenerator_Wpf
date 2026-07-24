@@ -6,7 +6,7 @@ using LicenseGenerator_Wpf.Core.Models;
 using LicenseGenerator_Wpf.Core.Profiles;
 using LicenseGenerator_Wpf.Core.Services;
 using Microsoft.Win32;
-using PB.BZH.Licensing.Wpf.Core.Services;
+using PB.BZH.Licensing.Core.Services;
 
 namespace LicenseGenerator_Wpf;
 

@@ -1,14 +1,19 @@
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using LicenseGenerator_Wpf.Core.Models;
 using LicenseGenerator_Wpf.Core.Profiles;
 using LicenseGenerator_Wpf.Core.Services;
 using Microsoft.Win32;
-using PB.BZH.Licensing.Core.Services;
+using PB.BZH.Licensing.Wpf.Core.Services;
 
 namespace LicenseGenerator_Wpf;
 
+[Obfuscation(
+  Feature = "renaming",
+  Exclude = true,
+  ApplyToMembers = true)]
 public partial class MainWindow: Window {
   private readonly LicenseFileService _licenseFileService = new();
   private readonly LicenseProfileService _profileService = new();
@@ -25,22 +30,6 @@ public partial class MainWindow: Window {
     _licenseService = LicenseHelper.CreerLicenseService(_profile);
     //WpfThemeManager.ApplyDarkTheme(this);
     ApplyProfileToUI(CreateEmptyProfile());
-  }
-
-  private static LicenseProfile CreateDefaultProfile() {
-    DateOnly today =
-      DateOnly.FromDateTime(DateTime.Today);
-
-    return new LicenseProfile {
-      ProductId = "GestionPlanningPersonnel",
-      LicenseId = "GPP-2026-0001",
-      CustomerName = "LE BELLEVUE",
-      SiteName = "7 rue Général Gouraud, 29200 BREST",
-      EmailContact = "admin@pb-bzh-concept.fr",
-      MachineHash = "133A6-623D2-B959E-78894",
-      ValidUntil = today.AddYears(1),
-      MaintenanceUntil = today.AddYears(1)
-    };
   }
 
   private static LicenseProfile CreateEmptyProfile() {
@@ -479,5 +468,13 @@ public partial class MainWindow: Window {
     if (mnuOpenLicenseFolder is not null) {
       mnuOpenLicenseFolder.IsEnabled = isEnabled;
     }
+  }
+
+  private void MnuLicense_Click(object sender,RoutedEventArgs e) {
+    LicenseHelper.AfficherLicence(this,_licenseService,_profile);
+  }
+
+  private void MnuImportNewLicense_Click(object sender,RoutedEventArgs e) {
+    LicenseHelper.ImporterLicence(this,_licenseService);
   }
 }

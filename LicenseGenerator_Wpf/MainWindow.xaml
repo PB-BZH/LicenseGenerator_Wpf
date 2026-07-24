@@ -50,6 +50,13 @@
 
                 <MenuItem Header="Quitter"
                           Click="BtnMenuQuitter_Click"/>
+                <MenuItem Header="MenuItem"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="License..."
+                          Click="MnuLicense_Click"/>
+                <MenuItem Header="Import new license"
+                          Click="MnuImportNewLicense_Click"/>
             </MenuItem>
         </Menu>
 

@@ -1,30 +1,24 @@
+using System.Reflection;
+
 namespace LicenseGenerator_Wpf.Core.Models;
 
+[Obfuscation(
+  Feature = "renaming",
+  Exclude = true,
+  ApplyToMembers = true)]
 public sealed class LicenseProfile {
   public Guid Id { get; set; } = Guid.NewGuid();
-
   public string ProductName { get; set; } = string.Empty;
-
   public string ProductId { get; set; } = string.Empty;
-
   public string LicenseId { get; set; } = string.Empty;
-
   public string CustomerName { get; set; } = string.Empty;
-
   public string SiteName { get; set; } = string.Empty;
-
   public string EmailContact { get; set; } = string.Empty;
-
   public string MachineHash { get; set; } = string.Empty;
-
   public DateOnly? ValidUntil { get; set; }
-
   public DateOnly? MaintenanceUntil { get; set; }
-
   public string LastLicenseFilePath { get; set; } = string.Empty;
-
   public DateTime? LastGeneratedAt { get; set; }
-
   public string DisplayName =>
     !string.IsNullOrWhiteSpace(ProductName)
       ? ProductName

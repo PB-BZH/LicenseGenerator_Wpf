@@ -1,6 +1,8 @@
+using System.Windows;
 using LicenseGenerator_Wpf.Core.Profiles;
-using PB.BZH.Licensing.Core.Models;
-using PB.BZH.Licensing.Core.Services;
+using PB.BZH.Licensing.Wpf;
+using PB.BZH.Licensing.Wpf.Core.Models;
+using PB.BZH.Licensing.Wpf.Core.Services;
 
 namespace LicenseGenerator_Wpf.Core.Services;
 
@@ -15,7 +17,9 @@ public static class LicenseHelper {
     }
   }
 
-  public static LicenseOptions ConstruireLicenseOptions(ServiceManagerProfile profile) {
+  public static LicenseOptions ConstruireLicenseOptions(
+    ServiceManagerProfile profile) {
+
     string productId =
       !string.IsNullOrWhiteSpace(profile.Product.ProductId)
         ? profile.Product.ProductId
@@ -28,67 +32,129 @@ public static class LicenseHelper {
 
     return new LicenseOptions {
       ProductId = productId,
-      ApplicationFolder = applicationFolder,
+      ApplicationFolder = applicationFolder
     };
   }
 
-  public static LicenseService CreerLicenseService(ServiceManagerProfile profile) {
-    return new LicenseService(ConstruireLicenseOptions(profile));
+  public static LicenseService CreerLicenseService(
+    ServiceManagerProfile profile) {
+
+    return new LicenseService(
+      ConstruireLicenseOptions(profile));
   }
 
-  public static bool VerifierLicenceAuDemarrage(ServiceManagerProfile profile) {
+  public static bool VerifierLicenceAuDemarrage(
+    ServiceManagerProfile profile,
+    Window? owner = null) {
+
     if (!TechnicalLicenseRequired) {
       return true;
     }
-    LicenseService licenseService = CreerLicenseService(profile);
-    return VerifierLicenceObligatoire(licenseService);
+
+    LicenseService licenseService =
+      CreerLicenseService(profile);
+
+    return VerifierLicenceObligatoire(
+      licenseService,
+      owner);
   }
 
-  private static bool VerifierLicenceObligatoire(LicenseService licenseService) {
-    LicenseValidationResult licenseResult = licenseService.ValidateInstalledLicense();
+  private static bool VerifierLicenceObligatoire(
+    LicenseService licenseService,
+    Window? owner) {
+
+    LicenseValidationResult licenseResult =
+      licenseService.ValidateInstalledLicense();
+
     if (licenseResult.IsValid) {
       return true;
     }
-    //using var activationForm = new LicenseActivationForm(
-    //  licenseService,
-    //  messageErreur: licenseResult.Message,
-    //  activationObligatoire: true);
-    //if (activationForm.ShowDialog() != DialogResult.OK) {
-    //  return false;
-    //}
-    licenseResult = licenseService.ValidateInstalledLicense();
+
+    LicenseActivationView activationView = new(
+      licenseService,
+      messageErreur: licenseResult.Message,
+      activationObligatoire: true);
+
+    if (owner is not null) {
+      activationView.Owner = owner;
+      activationView.WindowStartupLocation =
+        WindowStartupLocation.CenterOwner;
+    }
+    else {
+      activationView.WindowStartupLocation =
+        WindowStartupLocation.CenterScreen;
+    }
+
+    bool? dialogResult =
+      activationView.ShowDialog();
+
+    if (dialogResult != true) {
+      return false;
+    }
+
+    licenseResult =
+      licenseService.ValidateInstalledLicense();
+
     return licenseResult.IsValid;
   }
 
-  public static LicenseOptions ConstruireDisplayOptions(ServiceManagerProfile profile) {
+  public static LicenseOptions ConstruireDisplayOptions(
+    ServiceManagerProfile profile) {
+
     return new LicenseOptions {
       LogoImage = profile.Product.LogoImage
     };
   }
 
-  //public static void AfficherLicence(IWin32Window owner,LicenseService licenseService,ServiceManagerProfile profile) {
+  public static void AfficherLicence(
+    Window owner,
+    LicenseService licenseService,
+    ServiceManagerProfile profile) {
 
-  //  LicenseValidationResult resultat = licenseService.ValidateInstalledLicense();
+    LicenseValidationResult resultat =
+      licenseService.ValidateInstalledLicense();
 
-  //  if (!resultat.IsValid || resultat.License is null) {
-  //    using var activationForm = new LicenseActivationForm(licenseService,resultat.Message,activationObligatoire: false);
-  //    activationForm.ShowDialog(owner);
-  //    return;
-  //  }
+    if (!resultat.IsValid || resultat.License is null) {
+      LicenseActivationView activationView = new(
+        licenseService,
+        resultat.Message,
+        activationObligatoire: false);
 
-  //  LicenseOptions displayOptions = ConstruireDisplayOptions(profile);
+      activationView.Owner = owner;
+      activationView.WindowStartupLocation =
+        WindowStartupLocation.CenterOwner;
 
-  //  using var formulaire = new LicenseInfoForm(resultat.License,displayOptions);
-  //  formulaire.ShowDialog(owner);
-  //}
+      activationView.ShowDialog();
+      return;
+    }
 
-  //public static void ImporterLicence(IWin32Window owner,LicenseService licenseService) {
+    LicenseOptions displayOptions =
+      ConstruireDisplayOptions(profile);
 
-  //  using var formulaire = new LicenseActivationForm(
-  //    licenseService,
-  //    messageErreur: "Importer une nouvelle licence.",
-  //    activationObligatoire: false);
+    LicenseInfoView infoView = new(
+      resultat.License,
+      displayOptions);
 
-  //  formulaire.ShowDialog(owner);
-  //}
+    infoView.Owner = owner;
+    infoView.WindowStartupLocation =
+      WindowStartupLocation.CenterOwner;
+
+    infoView.ShowDialog();
+  }
+
+  public static void ImporterLicence(
+    Window owner,
+    LicenseService licenseService) {
+
+    LicenseActivationView activationView = new(
+      licenseService,
+      messageErreur: "Importer une nouvelle licence.",
+      activationObligatoire: false);
+
+    activationView.Owner = owner;
+    activationView.WindowStartupLocation =
+      WindowStartupLocation.CenterOwner;
+
+    activationView.ShowDialog();
+  }
 }

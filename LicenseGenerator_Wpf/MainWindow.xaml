@@ -50,6 +50,26 @@
 
                 <MenuItem Header="Quitter"
                           Click="BtnMenuQuitter_Click"/>
+                
+            </MenuItem>
+            
+            <MenuItem Header="Options">
+                <MenuItem x:Name="ThemeMode"
+                          Header="Theme sombre"
+                          Click="MnuThemeSombre_click"
+                          IsCheckable="True" />
+            </MenuItem>
+            
+            <MenuItem Header="Help">
+                <MenuItem Header="About"
+                          Click="mnuAbout_Click" /> 
+                <MenuItem Header="Recherche de mise à jour"
+                          Click="MnuCheckForUpdate_Click" />
+                <MenuItem Header="License..."
+                          Click="MnuLicense_Click"/>
+                <MenuItem Header="Import new license"
+                          Click="MnuImportNewLicense_Click"/>
+                
             </MenuItem>
         </Menu>
 

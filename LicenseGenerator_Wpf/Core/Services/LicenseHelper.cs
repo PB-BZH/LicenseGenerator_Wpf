@@ -1,6 +1,8 @@
+using System.Windows;
 using LicenseGenerator_Wpf.Core.Profiles;
 using PB.BZH.Licensing.Core.Models;
 using PB.BZH.Licensing.Core.Services;
+using PB.BZH.Licensing.Wpf.UI.Windows;
 
 namespace LicenseGenerator_Wpf.Core.Services;
 
@@ -66,29 +68,60 @@ public static class LicenseHelper {
     };
   }
 
-  //public static void AfficherLicence(IWin32Window owner,LicenseService licenseService,ServiceManagerProfile profile) {
+  public static void AfficherLicence(
+      Window owner,
+      LicenseService licenseService,
+      ServiceManagerProfile profile) {
 
-  //  LicenseValidationResult resultat = licenseService.ValidateInstalledLicense();
+    LicenseValidationResult resultat =
+      licenseService.ValidateInstalledLicense();
 
-  //  if (!resultat.IsValid || resultat.License is null) {
-  //    using var activationForm = new LicenseActivationForm(licenseService,resultat.Message,activationObligatoire: false);
-  //    activationForm.ShowDialog(owner);
-  //    return;
-  //  }
+    if (!resultat.IsValid || resultat.License is null) {
 
-  //  LicenseOptions displayOptions = ConstruireDisplayOptions(profile);
+      LicenseActivationWindow activationWindow = new(
+        licenseService,
+        resultat.Message,
+        activationObligatoire: false);
 
-  //  using var formulaire = new LicenseInfoForm(resultat.License,displayOptions);
-  //  formulaire.ShowDialog(owner);
-  //}
+      activationWindow.Owner = owner;
 
-  //public static void ImporterLicence(IWin32Window owner,LicenseService licenseService) {
+      activationWindow.WindowStartupLocation =
+        WindowStartupLocation.CenterOwner;
 
-  //  using var formulaire = new LicenseActivationForm(
-  //    licenseService,
-  //    messageErreur: "Importer une nouvelle licence.",
-  //    activationObligatoire: false);
+      activationWindow.ShowDialog();
 
-  //  formulaire.ShowDialog(owner);
-  //}
+      return;
+    }
+
+    LicenseOptions displayOptions =
+      ConstruireDisplayOptions(profile);
+
+    LicenseInfoWindow infoWindow = new(
+      resultat.License,
+      displayOptions);
+
+    infoWindow.Owner = owner;
+
+    infoWindow.WindowStartupLocation =
+      WindowStartupLocation.CenterOwner;
+
+    infoWindow.ShowDialog();
+  }
+
+  public static void ImporterLicence(
+      Window owner,
+      LicenseService licenseService) {
+
+    LicenseActivationWindow activationWindow = new(
+      licenseService,
+      messageErreur: "Importer une nouvelle licence.",
+      activationObligatoire: false);
+
+    activationWindow.Owner = owner;
+
+    activationWindow.WindowStartupLocation =
+      WindowStartupLocation.CenterOwner;
+
+    activationWindow.ShowDialog();
+  }
 }

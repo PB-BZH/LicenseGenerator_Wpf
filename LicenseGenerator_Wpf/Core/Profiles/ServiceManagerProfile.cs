@@ -16,22 +16,23 @@ namespace LicenseGenerator_Wpf.Core.Profiles {
     public string WebSetupUrl { get; set; } = "";
     public string UpdateManifestUrl { get; set; } = "";
     public string ReleaseDate { get; set; } = "";
-    public string ApplicationId { get; set; } = "";
+    public string ApplicationId { get; set; } = "LicenseGenerator_Wpf";
   }
 
   public sealed class ProductOptions {
-    public string ProductName { get; set; } = "License Generator";
-    public string ProductId { get; set; } = "LicenseGenerator";
-    public string ProductFolder { get; set; } = "LicenseGenerator";
+    public string ProductName { get; set; } = "License Generator WPF";
+    public string ProductId { get; set; } = "LicenseGenerator_Wpf";
+    public string ProductFolder { get; set; } = "LicenseGenerator_Wpf";
     public string Manufacturer { get; set; } = "PB BZH Concept";
     public string Version { get; set; } = "1.0.0";
     public string Description { get; set; } = "Generate license keys for PB BZH Concept products";
     public string UpgradeCode { get; set; } = "";
     public string IconPath { get; set; } = "";
     public Image? LogoImage { get; set; } = Properties.Resources.Application;
-    public string DownloadPageUrl { get; set; } = "https://www.pb-bzh-concept.fr";
+    public string DownloadPageUrl { get; set; } = "https://www.pb-bzh-concept.fr/softwares/download.php";
     public string PrivacyPageUrl { get; set; } = "https://www.pb-bzh-concept.fr/privacy.php";
     public string Copyright { get; set; } = "© Copyright PB BZH Concept 2026";
     public string EmailContact { get; set; } = "admin@pb-bzh-concept.fr";
+    public string DownloadCategory { get; set; } = "msi-software-packager";
   }
 }

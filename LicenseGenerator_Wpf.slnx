@@ -1,3 +1,8 @@
 <Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
+    <BuildType Name="ReleaseObfuscated" />
+  </Configurations>
   <Project Path="LicenseGenerator_Wpf/LicenseGenerator_Wpf.csproj" />
 </Solution>

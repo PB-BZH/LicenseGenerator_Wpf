@@ -5,6 +5,7 @@ using LicenseGenerator_Wpf.Core.Models;
 using LicenseGenerator_Wpf.Core.Profiles;
 using LicenseGenerator_Wpf.Core.Services;
 using Microsoft.Win32;
+using PB.BZH.Help.Wpf.UI.Theming;
 using PB.BZH.Licensing.Core.Services;
 
 namespace LicenseGenerator_Wpf;
@@ -23,7 +24,7 @@ public partial class MainWindow: Window {
   public MainWindow() {
     InitializeComponent();
     _licenseService = LicenseHelper.CreerLicenseService(_profile);
-    //WpfThemeManager.ApplyDarkTheme(this);
+    ThemeManager.SetTheme(AppTheme.Dark);
     ApplyProfileToUI(CreateEmptyProfile());
   }
 
@@ -479,5 +480,29 @@ public partial class MainWindow: Window {
     if (mnuOpenLicenseFolder is not null) {
       mnuOpenLicenseFolder.IsEnabled = isEnabled;
     }
+  }
+
+  private void mnuAbout_Click(object? sender,EventArgs e) {
+    HelpHelper.mnuAbout(this,_profile);
+  }
+
+  private void MnuLicense_Click(object sender,RoutedEventArgs e) {
+    LicenseHelper.AfficherLicence(this,_licenseService,_profile);
+  }
+
+  private void MnuImportNewLicense_Click(object sender,RoutedEventArgs e) {
+    LicenseHelper.ImporterLicence(this,_licenseService);
+  }
+
+  private async void MnuCheckForUpdate_Click(object sender,RoutedEventArgs e) {
+    await HelpHelper.mnuCheckForUpdates(this,_profile);
+  }
+
+  private void MnuThemeSombre_click(object sender,RoutedEventArgs e) {
+
+    ThemeManager.SetTheme(
+      ThemeMode.IsChecked
+        ? AppTheme.Dark
+        : AppTheme.Light);
   }
 }

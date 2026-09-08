@@ -1,54 +1,81 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net10.0-windows</TargetFramework>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<UseWPF>true</UseWPF>
-		<ApplicationIcon>Ressources\Application.ico</ApplicationIcon>
-		<PackageIcon>Application.png</PackageIcon>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<Compile Remove="Core\Services\ApplicationAccessService.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Include="Ressources\Application.ico" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Reference Include="PB.BZH.Help.Library">
-			<HintPath>..\..\PB.BZH.Help.Library\PB.BZH.Help.Library\bin\Release\net10.0-windows\PB.BZH.Help.Library.dll</HintPath>
-		</Reference>
-		<Reference Include="PB.BZH.Licensing">
-			<HintPath>..\..\PB.BZH.Licensing\PB.BZH.Licensing\bin\Release\net10.0-windows\PB.BZH.Licensing.dll</HintPath>
-		</Reference>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Update="Properties\Resources.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Resources.resx</DependentUpon>
-		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-		<EmbeddedResource Update="Properties\Resources.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="Ressources\Application.png">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
-	</ItemGroup>
-	<PropertyGroup Condition="'$(TechnicalLicenseRequired)' == 'true'">
-		<DefineConstants>$(DefineConstants);TECHNICAL_LICENSE_REQUIRED</DefineConstants>
-	</PropertyGroup>
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Ressources\Application.ico</ApplicationIcon>
+    <PackageIcon>Application.png</PackageIcon>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Configurations>Debug;Release;ReleaseObfuscated</Configurations>
+    <EazfuscatorIntegration>MSBuild</EazfuscatorIntegration>
+    <EazfuscatorActiveConfiguration>ReleaseObfuscated</EazfuscatorActiveConfiguration>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <Product>LicenseGenerator_Wpf</Product>
+    <ProductId>LicenseGenerator_Wpf</ProductId>
+    <ProductFolder>LicenseGenerator_Wpf</ProductFolder>
+    <Company>PB BZH Concept</Company>
+    <Version>1.3.1</Version>
+    <UpgradeCode>26947F68-EBAA-4E79-87B2-E1F40415A350</UpgradeCode>
+    <BundleUpgradeCode>579A6F93-12B0-4469-9718-419F195B9271</BundleUpgradeCode>
+    <WebBundleUpgradeCode>71F09863-9175-4766-B689-2FF33D6D805D</WebBundleUpgradeCode>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <FileVersion>1.3.1.0</FileVersion>
+    <InformationalVersion>1.3.1</InformationalVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Core\Profiles\ApplicationInfoProfile.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ressources\Application.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Ressources\Application.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='ReleaseObfuscated'">
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Gapotchenko.Eazfuscator.NET" Version="2026.1.818">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PB.BZH.Help.Core">
+      <HintPath>..\..\PB.BZH.Help.Core\PB.BZH.Help.Core\bin\Release\net10.0-windows\PB.BZH.Help.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PB.BZH.Help.Wpf">
+      <HintPath>..\..\PB.BZH.Help.Wpf\PB.BZH.Help.Wpf\bin\Release\net10.0-windows\PB.BZH.Help.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="PB.BZH.Licensing.Core">
+      <HintPath>..\..\PB.BZH.Licensing.Core\PB.BZH.Licensing.Core\bin\Release\net10.0-windows\PB.BZH.Licensing.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PB.BZH.Licensing.Wpf">
+      <HintPath>..\..\PB.BZH.Licensing.Wpf\PB.BZH.Licensing.Wpf\bin\Release\net10.0-windows\PB.BZH.Licensing.Wpf.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup Condition="'$(TechnicalLicenseRequired)' == 'true'">
+    <DefineConstants>$(DefineConstants);TECHNICAL_LICENSE_REQUIRED</DefineConstants>
+  </PropertyGroup>
 </Project>
